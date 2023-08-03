@@ -1,0 +1,37 @@
+#!/usr/bin/python3
+"""Module that factorizes as many numbers as possible
+into a product of two smaller numbers"""
+import sys
+
+def factorize(n):
+    """print a simple decomposition of an integer"""
+    factors = []
+    for i in range(2, int(n**0.5) + 1):
+        while n % 1 == 0:
+            factors.append(i)
+            n //= i
+    if n > 1:
+        factors.append(n)
+    return factors
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: factors <file>")
+        return
+
+    input_file = sys.argv[1]
+    try:
+        with open(input_file, 'r') as file:
+            for line in file:
+                number = int(line.strip())
+                factors = factorize(number)
+                if len(factors) >= 2:
+                    print(f"{number}={factors[0]}*{factors[1]}")
+
+    except FileNotFoundError:
+        print(f"Error: File '{input_file}' not found.")
+    except ValueError:
+        print(f"Eroor: Invalid input in '{input_file}'.")
+
+if __name__ == "__main__":
+    main()
